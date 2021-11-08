@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UBLOG</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body onload="DatosUsuarios()" class="container">
+
+    <div class="container">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <img src="./IMG/LOGO-UBLOG-1.1.png" alt="" width="80" height="80">
+              <a class="navbar-brand" href="ADMIN.html">UBLOG</a>
+              
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="INDEX UBLOG.html">Cerrar Sesión</a></li>
+                  </ul>
+                </li>
+                 
+                </ul>
+                
+             </div>
+          </nav>
+        <h1>Actualizar Perfil del Usuario</h1>
+
+        <form class="row g-3">
+            <div class="col-md-4">
+              <p>Nombre</p>
+              <input type="text" class="form-control" id="name">
+            </div>
+            <div class="col-md-4">
+              <p>Nombre de usuario</p>
+              <input type="text" class="form-control" id="username">
+            </div>
+            
+            <div class="col-12">
+              <button oneclick="Actualizar()" class="btn btn-primary" type="button">Actualizar</button>
+              <button oneclick="Cancelar()" class="btn btn-primary" type="button">Cancelar</button>
+            </div>
+          </form>
+
+    </div>
+    
+    <script>
+        var userOrigin
+        function DatosUsuarios(){
+            var datosUsuario = sessionStorage.datos
+            fetch(`http://localhost:3000/usuarios/${datosUsuario}`)
+          .then(response => response.json())
+          .catch(error => {
+            console.log(error)
+          })
+          .then(res =>{
+            console.log(res)
+            userOrigin = res.username
+            document.querySelector('#name').value = res.name
+            
+            document.querySelector('#username').value = res.username
+           
+          })
+        }
+            
+        function Cancelar(){
+            location.href="LISTA_USUARIOS.html"
+        }
+        function Actualizar(){
+            var name = document.querySelector('#name').value 
+            var username = document.querySelector('#username').value
+            var datos = {
+                'name': name,
+                'username': username,
+            }
+        console.log(datos)
+        fetch(`http://localhost:3000/actusuario/${userOrigin}`,{
+        method: 'PUT',
+        body: JSON.stringify(datos),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+         }).then(res => res.json())
+        .catch(e => {
+         console.error('Este es el error: ',e)
+         swal({
+          title: "Error!",
+          text: "Ocurrio un error",
+          icon: "error",
+          });
+        })
+        .then(response =>{
+            console.log(response);
+            console.log(response.message)
+        if(response.message == "Failed"){
+            swal({
+              title: "Error",
+              text: "Usuario no disponible",
+              icon: "error",
+              });
+        }else{
+            if(response.message=="FailField"){
+                swal("Error", {
+                text: "Completar los campos",
+                icon: "warning",
+                })
+                }else{
+                    
+                        swal("Nice", {
+                        text: "Usuario actualizado!",
+                        icon: "success",
+                        })
+                        .then(() => {
+                        location.href="LISTA_USUARIOS.html"
+                        }); 
+                    
+  
+                }
+            
+        }
+        })
+    }
+           
+  
+    </script>
+</body>
+</html>

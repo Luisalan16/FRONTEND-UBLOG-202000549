@@ -1,0 +1,17 @@
+h1{
+text-align: center;
+}
+
+btn btn-primary btn-lg {
+text-align: center;
+align-items: center;
+justify-content: center;
+margin-left: 50px;
+}
+
+container1 {
+    text-align: center;
+align-items: center;
+justify-content: center;
+margin-left: 50px;
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postear</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="./CSS/SUBIR.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <img src="./IMG/LOGO-UBLOG-1.1.png" alt="" width="80" height="80">
+      <a class="navbar-brand" href="DASHBOARD.html">UBLOG</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+
+    <h1>Nuevo Post</h1>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+   
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Tipo
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <li><a class="dropdown-item" href="#">Imagen</a></li>
+      <li><a class="dropdown-item" href="#">Video</a></li>
+      <li><hr class="dropdown-divider"></li>
+    </ul>
+  </li>
+  <div class="container">
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Nombre de usuario</span>
+            <input type="text" class="form-control" placeholder="hoja15" id="username" aria-describedby="basic-addon1">
+          </div>
+          
+          <label for="basic-url" class="form-label"></label>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="url">URL</span>
+            <input type="text" class="form-control" placeholder="https://example.com/users/" id="url" name="url" aria-describedby="basic-addon3">
+          </div>
+          
+          <div class="input-group">
+            <input type="text" class="form-control" id="category"placeholder="Categoría" aria-label="Recipient's username with two button addons">
+          
+            <button type="button" onclick="Postear(this.value)">Postear</button>
+         
+    </div>
+
+  
+  <script>
+    function Postear(){
+      console.log("Posteado");
+      var username = document.querySelector('#username').value
+      var url = document.querySelector('#url').value 
+      var category = document.querySelector('#category').value
+
+      var post = {
+        'username': username,
+        'url': url,
+        'category': category
+      }
+      console.log(post)
+    
+
+    fetch('http://localhost:3000/nuevoPost', {
+      method: 'POST',
+      body: JSON.stringify(post),
+      headers:{
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin':'*'
+      }})
+      .then(res=> res.json())
+      .catch(err => {
+        console.log('ERROR', err)
+        alert("Ocurrió un error")
+      })
+
+      .then(response => {
+        console.log(response);
+        alert(response.Mensaje)
+      })
+  }
+  </script>  
+    
+</body>
+</html>
