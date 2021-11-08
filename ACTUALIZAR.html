@@ -58,7 +58,7 @@
         var userOrigin
         function DatosUsuarios(){
             var datosUsuario = sessionStorage.datos
-            fetch(`http://localhost:3000/usuarios/${datosUsuario}`)
+            fetch(`https://backend-ipcd2s.herokuapp.com/usuarios/${datosUsuario}`)
           .then(response => response.json())
           .catch(error => {
             console.log(error)
@@ -84,7 +84,7 @@
                 'username': username,
             }
         console.log(datos)
-        fetch(`http://localhost:3000/actusuario/${userOrigin}`,{
+        fetch(`https://backend-ipcd2s.herokuapp.com/actusuario/${userOrigin}`,{
         method: 'PUT',
         body: JSON.stringify(datos),
         headers:{
