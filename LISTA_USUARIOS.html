@@ -60,7 +60,7 @@
       function obtenerUsuarios(){
         var contenido = document.querySelector('#bodyUsuarios') 
         contenido.innerHTML = ""
-        fetch('http://localhost:3000/usuarios')
+        fetch('https://backend-ipcd2s.herokuapp.com/usuarios')
         .then(response => response.json())
         .catch(error => {
         console.log(error)
