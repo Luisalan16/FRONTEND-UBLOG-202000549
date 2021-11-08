@@ -82,7 +82,7 @@
     }
       function EliminarUsuario(username){
           var username = username.value
-          fetch(`http://localhost:3000/usuario/${username}`, {
+          fetch(`https://backend-ipcd2s.herokuapp.com/usuario/${username}`, {
           method: 'DELETE'
       }); 
       obtenerUsuarios()
